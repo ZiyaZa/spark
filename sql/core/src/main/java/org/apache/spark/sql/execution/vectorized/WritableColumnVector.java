@@ -961,6 +961,7 @@ public abstract class WritableColumnVector extends ColumnVector {
     this.defaultCapacity = capacity;
     this.hugeVectorThreshold = SQLConf.get().vectorizedHugeVectorThreshold();
     this.hugeVectorReserveRatio = SQLConf.get().vectorizedHugeVectorReserveRatio();
+    this.isAllNull = type instanceof NullType;
 
     if (isArray()) {
       DataType childType;

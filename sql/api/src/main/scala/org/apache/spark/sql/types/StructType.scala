@@ -682,6 +682,12 @@ object StructType extends AbstractDataType {
       case (leftType, rightType) if leftType == rightType =>
         leftType
 
+      case (_: NullType, rightType) =>
+        rightType
+
+      case (leftType, _: NullType) =>
+        leftType
+
       case _ =>
         throw DataTypeErrors.cannotMergeIncompatibleDataTypesError(left, right)
     }
