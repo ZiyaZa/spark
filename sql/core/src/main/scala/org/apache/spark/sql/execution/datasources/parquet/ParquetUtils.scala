@@ -206,8 +206,10 @@ object ParquetUtils extends Logging {
       schema.forall(f => isBatchReadSupported(sqlConf, f.dataType))
 
   def isBatchReadSupported(sqlConf: SQLConf, dt: DataType): Boolean = dt match {
-    case _: AtomicType | NullType =>
+    case _: AtomicType =>
       true
+    case _: NullType =>
+      sqlConf.parquetVectorizedReaderNullTypeEnabled
     case at: ArrayType =>
       sqlConf.parquetVectorizedReaderNestedColumnEnabled &&
         isBatchReadSupported(sqlConf, at.elementType)
